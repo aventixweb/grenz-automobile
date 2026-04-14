@@ -194,27 +194,6 @@ html.js-ready .reveal-d1{transition-delay:.08s}
 html.js-ready .reveal-d2{transition-delay:.16s}
 html.js-ready .reveal-d3{transition-delay:.24s}
 
-/* ════════════════════════════════
-   COOKIE BANNER
-════════════════════════════════ */
-#cookie-banner{
-  position:fixed;bottom:0;left:0;right:0;z-index:1000;
-  background:var(--charcoal);border-top:1px solid rgba(255,255,255,.1);
-  padding:1.2rem 1.25rem;
-  transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1);
-  box-shadow:0 -8px 32px rgba(0,0,0,.5);
-  pointer-events:none;
-}
-#cookie-banner.show{transform:translateY(0);pointer-events:all;}
-.cookie-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
-.cookie-text{font-size:.78rem;color:var(--silver-l);font-weight:300;line-height:1.7}
-.cookie-text strong{color:var(--white);font-weight:600}
-.cookie-text a{color:var(--accent);text-decoration:underline;cursor:pointer}
-.cookie-btns{display:flex;gap:.75rem;flex-wrap:wrap}
-.cookie-accept{flex:1;min-width:120px;background:var(--white);color:var(--black);border:none;border-radius:var(--r);padding:.7rem 1rem;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;font-family:inherit}
-.cookie-accept:hover{background:var(--silver-x)}
-.cookie-decline{flex:1;min-width:120px;background:transparent;color:var(--silver-l);border:1px solid rgba(255,255,255,.2);border-radius:var(--r);padding:.7rem 1rem;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:inherit}
-.cookie-decline:hover{border-color:var(--silver-l);color:var(--white)}
 
 /* ── Maps consent overlay ── */
 .map-consent{
@@ -735,8 +714,6 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
   .zg{grid-template-columns:1fr 1fr}
   .map-consent-inner{height:380px}
   .map-embed-active iframe{height:380px}
-  .cookie-inner{flex-direction:row;align-items:center;justify-content:space-between}
-  .cookie-btns{flex-wrap:nowrap;min-width:260px}
   .modal{top:50%;left:50%;right:auto;bottom:auto;border-radius:var(--r);max-width:680px;max-height:88vh;transform:translate(-50%,-48%) scale(.97)}
   .modal.open{transform:translate(-50%,-50%) scale(1)}
 }
@@ -804,22 +781,6 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
 <body>
 <a href="#main-content" class="skip-link">Zum Inhalt springen</a>
 
-<!-- ════════════════════════════════
-     COOKIE BANNER
-════════════════════════════════ -->
-<div id="cookie-banner" role="dialog" aria-modal="true" aria-label="Cookie-Einstellungen" aria-live="polite">
-  <div class="cookie-inner">
-    <p class="cookie-text">
-      <strong>Cookie-Einstellungen.</strong>
-      Wir verwenden Google Maps zur Standortanzeige. Erst nach Ihrer Zustimmung wird eine Verbindung zu Google-Servern (USA) aufgebaut und Ihre IP-Adresse &uuml;bertragen. Ihre Entscheidung wird lokal in Ihrem Browser gespeichert &mdash; ohne externe Dienste.
-      Details in unserer <button class="modal-link inline" onclick="openModal('datenschutz')">Datenschutzerkl&auml;rung</button>.
-    </p>
-    <div class="cookie-btns">
-      <button class="cookie-accept" onclick="acceptCookies()">Alle akzeptieren</button>
-      <button class="cookie-decline" onclick="declineCookies()">Nur notwendige</button>
-    </div>
-  </div>
-</div>
 
 <!-- HEADER -->
 <header role="banner" aria-label="Grenz Automobile – Seitenheader">
@@ -936,7 +897,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
           <h3 class="vcard-title">Wohnmobile &amp; Reisemobile</h3>
           <p class="vcard-desc"></p>
           
-          <a href="https://home.mobile.de/GRENZAUTOMOBILE" target="_blank" rel="noopener noreferrer" class="vcard-link">Mehr erfahren &rarr;</a>
+          <a href="https://home.mobile.de/GRENZAUTOMOBILE?vc=Motorhome" target="_blank" rel="noopener noreferrer" class="vcard-link">Mehr erfahren &rarr;</a>
         </div>
       </article>
       <article class="vcard reveal reveal-d2">
@@ -946,7 +907,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
           <div class="vcard-tag">Vielfalt</div>
           <h3 class="vcard-title">Spezial & Sonderfahrzeuge</h3>
           <p class="vcard-desc"></p>
-          <a href="https://home.mobile.de/GRENZAUTOMOBILE" target="_blank" rel="noopener noreferrer" class="vcard-link">Zum Angebot &rarr;</a>
+          <a href="https://home.mobile.de/GRENZAUTOMOBILE?vc=VanUpTo7500" target="_blank" rel="noopener noreferrer" class="vcard-link">Zum Angebot &rarr;</a>
         </div>
       </article>
     </div>
@@ -1148,7 +1109,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
       <!-- Kontaktdaten -->
       <div class="reveal reveal-d1">
         <div class="kontakt-info">
-          <div class="krow"><div class="icon-box"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.42 2 2 0 0 1 3.59 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.74a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><div class="krow-label">Telefon</div><div class="krow-val"><a href="tel:01713310766">0171 3310766</a><a> / </a><a href="tel:052529399993">05252 939993</a></div></div></div>
+          <div class="krow"><div class="icon-box"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.42 2 2 0 0 1 3.59 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.74a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><div class="krow-label">Telefon</div><div class="krow-val"><a href="tel:01713310766">0171 3310766</a> / <a href="tel:052529399993">05252 939993</a></div></div></div>
           <div class="krow"><div class="icon-box"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="krow-label">E-Mail</div><div class="krow-val"><a href="#" class="cf-email-link" data-user="r.grenz-automobile" data-domain="web.de">r.grenz&#8209;automobile&#64;web.de</a></div></div></div>
           <div class="krow"><div class="icon-box"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="krow-label">&Ouml;ffnungszeiten</div><div class="krow-val"><table class="oz"><tr class="today"><td>Mo &ndash; Do</td><td>08:30 &ndash; 12:30 | 13:00 &ndash; 17:00</td></tr><tr><td>Freitag</td><td>08:30 &ndash; 12:30</td></tr><tr class="off"><td>Samstag</td><td>Geschlossen</td></tr><tr class="off"><td>Sonntag</td><td>Geschlossen</td></tr></table></div></div></div>
           <div class="krow"><div class="icon-box"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="krow-label">Adresse</div><div class="krow-val">Bleichstra&szlig;e 25 &middot; 33175 Bad Lippspringe</div></div></div>
@@ -1255,7 +1216,6 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
 
     <h3>8. Widerruf &amp; Einstellungen</h3>
     <p>Eine erteilte Einwilligung zur Datenverarbeitung k&ouml;nnen Sie jederzeit widerrufen &mdash; per formloser E-Mail oder &uuml;ber den Button unten. Nach dem Zur&uuml;cksetzen werden Sie beim n&auml;chsten Seitenaufruf erneut um Ihre Einwilligung gebeten.</p>
-    <button class="cookie-decline" style="margin-top:.5rem;width:100%" onclick="resetCookies()">Cookie-Einstellungen zur&uuml;cksetzen</button>
   </div>
 </div>
 
@@ -1272,37 +1232,6 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
 </div>
 
 <script>
-/* ══════════════════════════════
-   COOKIE & CONSENT LOGIC
-══════════════════════════════ */
-const CONSENT_KEY = 'grenz_cookie_consent';
-
-function getCookieConsent(){ return localStorage.getItem(CONSENT_KEY); }
-
-function acceptCookies(){
-  localStorage.setItem(CONSENT_KEY, 'accepted');
-  hideBanner();
-  loadMap();
-}
-function declineCookies(){
-  localStorage.setItem(CONSENT_KEY, 'declined');
-  hideBanner();
-}
-function hideBanner(){
-  const b = document.getElementById('cookie-banner');
-  b.classList.remove('show');
-  // pointer-events:none is handled by CSS when .show is absent
-  setTimeout(()=>{ b.style.display='none'; }, 450);
-}
-function resetCookies(){
-  localStorage.removeItem(CONSENT_KEY);
-  closeModal();
-  setTimeout(()=>{
-    const b = document.getElementById('cookie-banner');
-    b.style.display = '';
-    setTimeout(()=> b.classList.add('show'), 50);
-  }, 300);
-}
 
 function loadMap(){
   const box = document.getElementById('map-consent-box');
@@ -1320,24 +1249,6 @@ function loadMap(){
   parent.replaceChild(wrapper, box);
 }
 
-/* ══════════════════════════════
-   INIT: Cookie Banner
-══════════════════════════════ */
-(function initConsent(){
-  const consent = getCookieConsent();
-  if(consent === 'accepted'){
-    document.addEventListener('DOMContentLoaded', loadMap);
-  } else if(consent === 'declined'){
-    // map stays as consent box
-  } else {
-    // Show banner after short delay for better LCP
-    window.addEventListener('load', function(){
-      setTimeout(function(){
-        document.getElementById('cookie-banner').classList.add('show');
-      }, 800);
-    });
-  }
-})();
 
 /* ══════════════════════════════
    MOBILE MENU
