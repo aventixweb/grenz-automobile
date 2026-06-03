@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="de" prefix="og: https://ogp.me/ns#">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5R6GL3JL1N"></script>
+<!-- Google Consent Mode v2 – Standard-Ablehnung bis Einwilligung.
+     WICHTIG: Es wird hier KEIN externes Google-Skript geladen. Das gtag.js
+     von googletagmanager.com wird erst nach aktiver Einwilligung des Nutzers
+     dynamisch nachgeladen (siehe enableGA() im Consent-Banner-Skript unten).
+     Vor der Einwilligung geht KEINE Anfrage an Google/USA. -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-5R6GL3JL1N');
+  gtag('consent', 'default', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    wait_for_update: 500
+  });
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -785,9 +790,34 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
   .footer-bottom{flex-direction:row;justify-content:space-between;align-items:center}
   .footer-legal{flex-direction:row}
 }
+/* ── Cookie Banner ── */
+#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1a1a1a;border-top:1px solid #333;padding:16px 24px;display:flex;align-items:center;justify-content:center;}
+.cookie-inner{display:flex;align-items:center;gap:20px;flex-wrap:wrap;max-width:900px;width:100%;}
+.cookie-text{color:#ccc;font-size:0.85rem;line-height:1.5;margin:0;flex:1;min-width:200px;}
+.cookie-link{color:var(--accent,#c0b49a);text-decoration:underline;}
+.cookie-btns{display:flex;gap:10px;flex-shrink:0;}
+.cookie-btn{padding:9px 20px;border:none;border-radius:4px;font-size:0.85rem;cursor:pointer;font-weight:600;transition:opacity .2s;}
+.cookie-decline{background:#333;color:#ccc;}
+.cookie-accept{background:var(--accent,#c0b49a);color:#0d0d0d;}
+.cookie-btn:hover{opacity:.85;}
+@media(max-width:600px){.cookie-inner{flex-direction:column;align-items:flex-start;}.cookie-btns{width:100%;}.cookie-btn{flex:1;}}
 </style>
 </head>
 <body>
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookie-banner" role="dialog" aria-label="Cookie-Einwilligung" style="display:none;">
+  <div class="cookie-inner">
+    <p class="cookie-text">
+      Diese Website verwendet Google Analytics, um die Nutzung zu analysieren. Ihre Einwilligung ist freiwillig und kann jederzeit widerrufen werden.
+      <a href="#" onclick="openModal('modal-datenschutz');return false;" class="cookie-link">Datenschutz</a>
+    </p>
+    <div class="cookie-btns">
+      <button class="cookie-btn cookie-decline" onclick="cookieDecline()">Ablehnen</button>
+      <button class="cookie-btn cookie-accept" onclick="cookieAccept()">Akzeptieren</button>
+    </div>
+  </div>
+</div>
+
 <a href="#main-content" class="skip-link">Zum Inhalt springen</a>
 
 
@@ -1182,14 +1212,13 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
 <div class="modal-backdrop" id="backdrop" onclick="closeModal()"></div>
 
 <div class="modal" id="modal-impressum" role="dialog" aria-modal="true" aria-labelledby="imp-title">
-  <div class="modal-head"><div><div class="modal-title" id="imp-title">Impressum</div><div class="modal-sub">Angaben gem&auml;&szlig; &sect; 5 TMG</div></div><button class="modal-x" onclick="closeModal()" aria-label="Schlie&szlig;en"><svg viewBox="0 0 14 14"><line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/></svg></button></div>
+  <div class="modal-head"><div><div class="modal-title" id="imp-title">Impressum</div><div class="modal-sub">Angaben gem&auml;&szlig; &sect; 5 DDG</div></div><button class="modal-x" onclick="closeModal()" aria-label="Schlie&szlig;en"><svg viewBox="0 0 14 14"><line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/></svg></button></div>
   <div class="modal-body">
     <h3>Verantwortlicher</h3>
     <div class="addr-box">Grenz Automobile<br>Inhaber: Roland Grenz &middot; KFZ-Meisterbetrieb<br>Bleichstra&szlig;e 25 &middot; 33175 Bad Lippspringe<br><br>Telefon: 05252 939993<br>E-Mail: r.grenz&#8209;automobile&#64;web.de</div>
-    <h3>Verantwortlich f&uuml;r den Inhalt</h3>
+    <h3>Verantwortlich f&uuml;r den Inhalt nach &sect; 18 Abs. 2 MStV</h3>
     <p>Roland Grenz, Bleichstra&szlig;e 25, 33175 Bad Lippspringe</p>
-    <h3>Streitschlichtung</h3>
-    <p>Die Europ&auml;ische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr</p>
+    <h3>Verbraucherstreitbeilegung</h3>
     <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
   </div>
 </div>
@@ -1204,26 +1233,34 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
     <h3>2. Ihre Rechte</h3>
     <p>Sie haben jederzeit das Recht auf unentgeltliche Auskunft &uuml;ber Herkunft, Empf&auml;nger und Zweck Ihrer gespeicherten Daten sowie auf Berichtigung, Sperrung oder L&ouml;schung. Des Weiteren steht Ihnen ein Beschwerderecht bei der zust&auml;ndigen Aufsichtsbeh&ouml;rde zu.</p>
 
-    <h3>3. Datenerfassung</h3>
-    <p>Beim Besuch der Website erfassen unsere Server automatisch technische Informationen (Browsertyp, Betriebssystem, Referrer-URL, IP-Adresse, Zugriffszeit). Eine Zusammenf&uuml;hrung mit anderen Datenquellen findet nicht statt. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.</p>
+    <h3>3. Server-Logfiles &amp; Hosting</h3>
+    <p>Beim Besuch der Website erfassen unsere Server automatisch technische Informationen (Browsertyp, Betriebssystem, Referrer-URL, IP-Adresse, Zugriffszeit). Eine Zusammenf&uuml;hrung mit anderen Datenquellen findet nicht statt. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am sicheren und stabilen Betrieb der Website).</p>
+    <p>Diese Website wird bei <strong>Netlify</strong> gehostet (Netlify, Inc., 512 2nd Street, Suite 200, San Francisco, CA 94107, USA). Beim Aufruf der Seite werden die genannten Zugriffsdaten auf den Servern von Netlify verarbeitet. Dabei k&ouml;nnen Daten in die <strong>USA</strong> &uuml;bermittelt werden. Netlify ist unter dem <strong>EU-US Data Privacy Framework</strong> zertifiziert; erg&auml;nzend bestehen EU-Standardvertragsklauseln als Garantie f&uuml;r ein angemessenes Datenschutzniveau. Weitere Informationen: <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">netlify.com/privacy</a></p>
 
     <h3>4. Cookie-Einwilligungsverwaltung (Consent)</h3>
     <p>Diese Website nutzt eine eigene, datenschutzfreundliche L&ouml;sung zur Verwaltung Ihrer Cookie-Einwilligung. Dabei wird Ihre Entscheidung (Zustimmung oder Ablehnung) ausschlie&szlig;lich im <strong>lokalen Speicher Ihres Browsers (localStorage)</strong> gespeichert &mdash; kein Cookie wird gesetzt, und es werden keine Daten an Dritte &uuml;bertragen.</p>
     <p>Gespeichert wird nur ein einzelner Schl&uuml;ssel (<em>grenz_cookie_consent</em>) mit dem Wert &bdquo;accepted&ldquo; oder &bdquo;declined&ldquo;. Dieser Wert verbleibt ausschlie&szlig;lich auf Ihrem Ger&auml;t. Es findet keine Verbindung zu externen Servern statt. Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung).</p>
     <p>Sie k&ouml;nnen Ihre Einwilligung jederzeit &uuml;ber den Button am Ende dieser Erkl&auml;rung zur&uuml;cksetzen.</p>
 
-    <h3>5. Webfonts (Bunny Fonts)</h3>
+    <h3>5. Google Analytics</h3>
+    <p>Diese Website verwendet &mdash; <strong>ausschlie&szlig;lich nach Ihrer ausdr&uuml;cklichen Einwilligung</strong> &mdash; Google Analytics 4, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland (&bdquo;Google&ldquo;). Vor Ihrer Einwilligung wird <strong>kein</strong> Google-Analytics-Skript geladen und es findet <strong>keine Verbindung</strong> zu Google-Servern statt.</p>
+    <p>Nach erteilter Einwilligung setzt Google Analytics Cookies (u.&nbsp;a. <em>_ga</em>, <em>_ga_&lt;ID&gt;</em>) und verarbeitet Nutzungsdaten wie aufgerufene Seiten, Verweildauer, ungef&auml;hrer Standort, Ger&auml;te- und Browserinformationen sowie eine <strong>gek&uuml;rzte (anonymisierte) IP-Adresse</strong> (es ist <code>anonymize_ip</code> aktiviert). Diese Daten dienen der statistischen Auswertung der Websitenutzung.</p>
+    <p><strong>Drittland&uuml;bermittlung:</strong> Dabei k&ouml;nnen Daten an die Google LLC in den USA &uuml;bertragen werden. Google LLC ist unter dem <strong>EU-US Data Privacy Framework</strong> zertifiziert; erg&auml;nzend bestehen EU-Standardvertragsklauseln. Ein dem EU-Recht entsprechendes Datenschutzniveau kann trotz dieser Ma&szlig;nahmen nicht in jedem Fall garantiert werden.</p>
+    <p><strong>Rechtsgrundlage</strong> ist Ihre Einwilligung gem&auml;&szlig; Art. 6 Abs. 1 lit. a DSGVO sowie &sect; 25 Abs. 1 TDDDG. Sie k&ouml;nnen die Einwilligung jederzeit mit Wirkung f&uuml;r die Zukunft &uuml;ber den Button am Ende dieser Erkl&auml;rung widerrufen. Die von Google erhobenen Daten werden gem&auml;&szlig; den von uns gew&auml;hlten Aufbewahrungseinstellungen nach maximal 14&nbsp;Monaten automatisch gel&ouml;scht.</p>
+    <p>Weitere Informationen: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">policies.google.com/privacy</a></p>
+
+    <h3>6. Webfonts (Bunny Fonts)</h3>
     <p>Diese Website verwendet Schriftarten des Dienstes <strong>Bunny Fonts</strong>, betrieben von BunnyWay d.o.o., &Scaron;martinska cesta 152, 1000 Ljubljana, Slowenien (EU). Die Schriftarten werden von Servern innerhalb der Europ&auml;ischen Union bereitgestellt. Beim Laden der Seite wird eine Verbindung zu den Servern von Bunny Fonts hergestellt, dabei wird Ihre IP-Adresse &uuml;bertragen.</p>
     <p>Im Gegensatz zu Google Fonts findet <strong>kein Datentransfer in Drittstaaten</strong> au&szlig;erhalb der EU statt. Es werden keine personenbezogenen Daten dauerhaft gespeichert oder an Dritte weitergegeben. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der einheitlichen Darstellung der Website).</p>
     <p>Weitere Informationen: <a href="https://bunny.net/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">bunny.net/privacy</a></p>
 
-    <h3>6. Google Maps</h3>
+    <h3>7. Google Maps</h3>
     <p>Diese Website bindet Google Maps ein, betrieben von Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA. Google Maps wird <strong>erst nach Ihrer ausdr&uuml;cklichen Zustimmung</strong> &uuml;ber die Karten-Einblendung geladen. Erst dann werden Daten (inkl. IP-Adresse) an Google &uuml;bertragen. Ohne Zustimmung findet kein Verbindungsaufbau zu Google-Servern statt. Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO (Einwilligung). Datenschutzerkl&auml;rung Google: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">policies.google.com/privacy</a></p>
 
-    <h3>7. SSL-Verschl&uuml;sselung</h3>
+    <h3>8. SSL-Verschl&uuml;sselung</h3>
     <p>Diese Seite nutzt SSL- bzw. TLS-Verschl&uuml;sselung. &Uuml;bermittelte Daten k&ouml;nnen von Dritten nicht mitgelesen werden.</p>
 
-    <h3>8. Widerruf &amp; Einstellungen</h3>
+    <h3>9. Widerruf &amp; Einstellungen</h3>
     <p>Eine erteilte Einwilligung zur Datenverarbeitung k&ouml;nnen Sie jederzeit widerrufen &mdash; per formloser E-Mail oder &uuml;ber den Button unten. Nach dem Zur&uuml;cksetzen werden Sie beim n&auml;chsten Seitenaufruf erneut um Ihre Einwilligung gebeten.</p>
   </div>
 </div>
@@ -1232,7 +1269,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
   <div class="modal-head"><div><div class="modal-title" id="dis-title">Disclaimer</div><div class="modal-sub">Haftungsausschluss</div></div><button class="modal-x" onclick="closeModal()" aria-label="Schlie&szlig;en"><svg viewBox="0 0 14 14"><line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/></svg></button></div>
   <div class="modal-body">
     <h3>Haftung f&uuml;r Inhalte</h3>
-    <p>Als Diensteanbieter sind wir gem&auml;&szlig; &sect; 7 Abs. 1 TMG f&uuml;r eigene Inhalte nach den allgemeinen Gesetzen verantwortlich. Nach &sect;&sect; 8 bis 10 TMG sind wir jedoch nicht verpflichtet, &uuml;bermittelte oder gespeicherte fremde Informationen zu &uuml;berwachen. Bei Bekanntwerden von Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.</p>
+    <p>Als Diensteanbieter sind wir gem&auml;&szlig; &sect; 7 Abs. 1 DDG f&uuml;r eigene Inhalte nach den allgemeinen Gesetzen verantwortlich. Nach &sect;&sect; 8 bis 10 DDG sind wir jedoch nicht verpflichtet, &uuml;bermittelte oder gespeicherte fremde Informationen zu &uuml;berwachen. Bei Bekanntwerden von Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.</p>
     <h3>Haftung f&uuml;r Links</h3>
     <p>Unser Angebot enth&auml;lt Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. F&uuml;r die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
     <h3>Urheberrecht</h3>
@@ -1241,6 +1278,61 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
 </div>
 
 <script>
+/* ══════════════════════════════
+   COOKIE CONSENT BANNER
+══════════════════════════════ */
+(function(){
+  const KEY = 'grenz_cookie_consent';
+  const GA_ID = 'G-5R6GL3JL1N';
+  let gaLoaded = false;
+
+  function loadGAScript(){
+    if(gaLoaded) return;
+    gaLoaded = true;
+    gtag('js', new Date());
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  function enableGA(){
+    gtag('consent', 'update', { analytics_storage: 'granted' });
+    loadGAScript();
+  }
+
+  function declineGA(){
+    gtag('consent', 'update', { analytics_storage: 'denied' });
+  }
+
+  function hideBanner(){
+    const b = document.getElementById('cookie-banner');
+    if(b) b.style.display = 'none';
+  }
+
+  window.cookieAccept = function(){
+    localStorage.setItem(KEY, 'accepted');
+    enableGA();
+    hideBanner();
+  };
+
+  window.cookieDecline = function(){
+    localStorage.setItem(KEY, 'declined');
+    declineGA();
+    hideBanner();
+  };
+
+  const saved = localStorage.getItem(KEY);
+  if(saved === 'accepted') { enableGA(); }
+  else if(saved === 'declined') { declineGA(); }
+  else {
+    document.addEventListener('DOMContentLoaded', function(){
+      const b = document.getElementById('cookie-banner');
+      if(b) b.style.display = 'flex';
+    });
+  }
+})();
 
 function loadMap(){
   const box = document.getElementById('map-consent-box');
